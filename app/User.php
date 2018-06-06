@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\usersrole;
+use App\Models\users0001;
+use Session;
 
 class User extends Authenticatable
 {
