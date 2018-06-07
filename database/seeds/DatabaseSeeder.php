@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-      DB::unprepared("Exec sp_defaultlanguage 'overt', 'us_english' Reconfigure");
+      //DB::unprepared("Exec sp_defaultlanguage 'overt', 'us_english' Reconfigure");
     	$this->call(UsersTableSeeder::class);
       $this->call(usersrolesSeeder::class);
       $this->call(userstasksSeeder::class);

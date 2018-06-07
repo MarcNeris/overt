@@ -114,7 +114,7 @@ $this->group(['middleware'=>['auth'],'namespace'=>'Bam', 'prefix' =>'bam'], func
 	$this->get('r034funPosTraQtdFun',	'hcmController@r034funPosTraQtdFun')	->name('bam.r034funPosTraQtdFun');
 	$this->get('r034funNomCcuQtdFun',	'hcmController@r034funNomCcuQtdFun')	->name('bam.r034funNomCcuQtdFun');
 	$this->get('r046verTotEveDesEve',	'hcmController@r046verTotEveDesEve')	->name('bam.r046verTotEveDesEve');
-	$this->get('r046verCodColDesEve',	'hcmController@r046verCodColDesEve')	->name('bam.r046verCodColDesEve');
+	$this->get('r046verCodColDesEve/{CodCal}',	'hcmController@r046verCodColDesEve');
 
 	//********************************************************************//
 	//TOP 5

@@ -18,10 +18,9 @@ class CreateUsersrolesTable extends Migration
             $table->char        ('SitReg', 1)   ->comment('Situação do Registro');
             $table->char        ('TipRol', 1)   ->comment('Tipo do Papel');
             $table->char        ('SitRol', 1)   ->comment('Situação do Papel');
-            $table->string      ('NomRol',200)  ->comment('Nome do Papel do Usuário');
+            $table->string      ('NomRol',90)   ->unique()->comment('Nome do Papel do Usuário');
             $table->text        ('DscRol')      ->comment('Descrição das Funções do Papel');
             $table->timestamps();
-            $table->unique(['NomRol']);
         });
     }
 

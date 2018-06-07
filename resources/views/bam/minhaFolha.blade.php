@@ -5,24 +5,59 @@
 @stop
 
 @section('content')
-
 <div class="row">
-  <div class="col-md-8">
-    <div class="card ">
-      <div class="card-header">
-        <h4 class="card-title">Folha de Pagamento - <small class="description">holerite</small></h4>
+  <div class="col-md-10">
+    <div class="card card-chart">
+      <div class="card-header card-header-icon card-header-danger">
+          <div class="card-icon">
+              <i class="material-icons">group</i>
+          </div>
+          <div class="card-header" id="TitCal">
+            <h4 class="card-title">Folha de Pagamento - <small class="description"></small></h4>
+        </div>
       </div>
-      <div class="card-body ">
+      <div class="card-body">
         <div class="row">
           <div class="col-md-2">
             <ul id="CodCal" class="nav nav-pills nav-pills-rose flex-column" role="tablist"></ul>
           </div>
           <div class="col-lg-10">
-            <div id="CodCmp" class="tab-content"></div>
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <tr>
+                    <th>
+                      Evento
+                    </th>
+                    <th>
+                      Referência
+                    </th>
+                    <th>
+                      Demonstrativo
+                    </th>
+                    <th>
+                      Desconto
+                    </th>
+                    <th>
+                      Proventos
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="TabEve">
+                </tbody>
+                <tfoot id="TotEve">
+                </tfoot>
+              </table>
+            </div>
           </div>
-        </div>
+        </div> 
       </div>
-    </div>
+      <div class="card-footer">
+          <div class="stats">
+              <i class="material-icons">access_time</i>
+              <span id="#"></span>
+          </div>
+      </div>
   </div>
 </div>
 
@@ -30,21 +65,55 @@
 
 @section('js')
 <script type="text/javascript">
-  //********************************************************************//
-  //
-  //HCM FOLHA CARREGA O CODIGO DE CALCULO
-  //
-  //********************************************************************//
+//********************************************************************//
+//
+//HCM FOLHA CARREGA O CODIGO DE CALCULO
+//
+//********************************************************************//
 
 function CodCmp(CodCal){
-  //alert(CodCal);
+  
+  var TitCal = '<h4 class="card-title">Folha de Pagamento - <strong>Competência ${MesAno}</strong> <small class="description">O valor líquido de <strong class="text-success">${VlrLiq}</strong> foi depositado em : ${DatPag} </small></h4>';
+  var CodEve = '<tr><td>${CodEve}</td><td class="text-right">${RefEve}</td><td class="text-right">${VlrOut}</td><td class="text-right text-danger">${VlrDsc}</td><td class="text-right text-success">${VlrPro}</td></tr>';
+  var TotEve = '<th>Totais</th><th></th><th class="text-right">${TotOut}</th><th class="text-right text-danger">${TotDsc}</th><th class="text-right text-success">${TotPro}</th>';
+
+
+  $.template( "TabEve", CodEve);
+
+  $.ajax({
+    type: "GET",
+    url: "{{url('bam/r046verCodColDesEve')}}"+'/'+CodCal,
+    dataType : 'json',
+    success: function(r046verCodColDesEve){
+      
+      $('#TabEve').empty();
+      $('#TotEve').empty();
+      $('#TitCal').empty();
+
+      var TotCal = r046verCodColDesEve.TotCal;
+      console.log(TotCal);
+
+      $.tmpl( TitCal, TotCal ).appendTo( '#TitCal' );
+
+      $.tmpl( TotEve, TotCal ).appendTo( '#TotEve' );
+        
+      $.each( r046verCodColDesEve.series, function(k, TabEve){
+
+        $.tmpl( CodEve, TabEve ).appendTo( '#TabEve' );
+
+      });
+    }
+  })
 }
+
+
+
+
+
 
 $(document).ready(function (){
 
   var CodCal = '<li class="nav-item"><a class="nav-link show" onclick="CodCmp(${CodCal})" data-toggle="tab" href="#link${CodCal}" role="tablist">${DatCmp}</a></li>';
-
-  var CodCmp = '<div class="tab-pane" id="link${CodCal}">${CodCal}</div>';
 
   $.template( "CodCal", CodCal);
   $.template( "CodCmp", CodCmp);
@@ -54,12 +123,13 @@ $(document).ready(function (){
     url: "{{url('bam/get_r044cal')}}",
     dataType : 'json',
     success: function(get_r044cal){
+
+       CodCmp();
       
       $( "#CodCal" ).empty();
       $( "#CodCmp" ).empty();
 
       $.tmpl( "CodCal", get_r044cal ).appendTo( "#CodCal" );
-      $.tmpl( "CodCmp", get_r044cal ).appendTo( "#CodCmp" );
     }
   })
 })

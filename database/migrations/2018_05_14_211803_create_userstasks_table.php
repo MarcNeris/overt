@@ -18,10 +18,9 @@ class CreateUserstasksTable extends Migration
             $table->char        ('SitReg', 1)   ->comment('Situação do Registro');
             $table->char        ('TipTsk', 1)   ->comment('Tipo da Tarefa/Permissão');
             $table->char        ('SitTsk', 1)   ->comment('Situação da Tarefa/Permissão');
-            $table->string      ('NomTsk',200)  ->comment('Nome da Tarefa/Permissão');
+            $table->string      ('NomTsk',90)   ->unique()->comment('Nome da Tarefa/Permissão');
             $table->text        ('DscTsk')      ->comment('Descrição da Tarefa/Permissão');
             $table->timestamps();
-            $table->unique(['NomTsk']);
         });
     }
 

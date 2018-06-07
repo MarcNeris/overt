@@ -43,13 +43,13 @@ class hcmController extends Controller
 
 				$data[$key]['CodCal']=$r044cal->CodCal;
 				$data[$key]['DatPag']=date('d/m/Y', strtotime($r044cal->DatPag));
-				$data[$key]['DatCmp']=strftime("%b/%Y", strtotime($r044cal->IniCmp));//date('M-Y', strtotime($r044cal->IniCmp));//.date('d/m/Y', strtotime($r044cal->FimCmp));
+				$data[$key]['DatCmp']=strftime("%b/%Y", strtotime($r044cal->IniCmp));
 		}
 
 		return response()->json($data);
 	}
 
-	public function r046verCodColDesEve(){
+	public function r046verCodColDesEve($codcal){
 
 		$CodCal = r046ver::join('r044cal', function ($join) {$join
         	->on('r044cal.NumEmp', '=', 'r046ver.NumEmp')
@@ -58,6 +58,7 @@ class hcmController extends Controller
     	->whereIn('r046ver.NumEmp', erp()->CodEmp)
 		->whereIn('r044cal.TipCal', [11])
 		->where('r044cal.SitCal', 'T')
+		->where('r044cal.CodCal', $codcal)
 		->orderBy('r044cal.CodCal','Desc')
 		->first(['r044cal.CodCal','r044cal.DatPag','r044cal.PerRef']);
 
@@ -94,9 +95,11 @@ class hcmController extends Controller
     	
     	foreach ($r046vers as $key => $r046ver) {
 
+    		$r046ver->CodEve = str_pad($r046ver->CodEve, 4, '0',STR_PAD_LEFT).' - '.$r046ver->DesEve;
+
 			if ($r046ver->TipEve<=2){
 				$TotPro+= $r046ver->ValEve;
-				$r046ver->VlrPro = $r046ver->ValEve;
+				$r046ver->VlrPro = 'R$ '.number_format($r046ver->ValEve, 2, ',', '.');
 				$r046ver->VlrDsc = 0;
 				$r046ver->VlrOut = 0;
 			}
@@ -104,7 +107,7 @@ class hcmController extends Controller
 			if ($r046ver->TipEve==(3)){
 				$TotDsc+= $r046ver->ValEve;
 				$r046ver->VlrPro = 0;
-				$r046ver->VlrDsc = $r046ver->ValEve;
+				$r046ver->VlrDsc = 'R$ '.number_format($r046ver->ValEve, 2, ',', '.');
 				$r046ver->VlrOut = 0;
 			}
 
@@ -112,18 +115,18 @@ class hcmController extends Controller
 				$TotOut+= $r046ver->ValEve;
 				$r046ver->VlrPro = 0;
 				$r046ver->VlrDsc = 0;
-				$r046ver->VlrOut = $r046ver->ValEve;
+				$r046ver->VlrOut = 'R$ '.number_format($r046ver->ValEve, 2, ',', '.');
 			}
     	}
 
 
 		$data['series'] = $r046vers->toArray();
-		$data['DatPag'] = date('d/m/Y', strtotime($CodCal->DatPag));
-		$data['MesAno'] = date('m/Y', strtotime($CodCal->PerRef));
-		$data['TotPro'] = $TotPro;
-    	$data['TotDsc'] = $TotDsc;
-    	$data['TotOut'] = $TotOut;
-    	$data['VlrLiq'] = $TotPro-$TotDsc;
+		$data['TotCal']['DatPag'] = date('d/m/Y', strtotime($CodCal->DatPag));
+		$data['TotCal']['MesAno'] = date('m/Y', strtotime($CodCal->PerRef));
+    	$data['TotCal']['TotOut'] = 'R$ '.number_format($TotOut, 2, ',', '.');
+		$data['TotCal']['TotPro'] = 'R$ '.number_format($TotPro, 2, ',', '.');
+    	$data['TotCal']['TotDsc'] = 'R$ '.number_format($TotDsc, 2, ',', '.');
+    	$data['TotCal']['VlrLiq'] = 'R$ '.number_format(($TotPro-$TotDsc), 2, ',', '.');
 
 		return response()->json($data);
 	}
