@@ -35,7 +35,7 @@ class overtMail extends Mailable //implements ShouldQueue
         
         return $this->from('overt@overt.com.br', $this->logeml001['NomFta'])
             ->subject($this->logeml001['NomFta'].' | '.$this->logeml001['EmlTit'])
-            ->cc('marceloneris@hotmail.com')
+            ->bcc('overt@overt.com.br')
             ->with([
                 'NomDst' => $this->logeml001['NomDst'],
                 'EmlDst' => $this->logeml001['EmlDst'],

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Senior\r034fun;
 use App\Models\Senior\r044cal;
 use App\Models\Senior\r046ver;
+
 use DB;
 
 class hcmController extends Controller
@@ -16,6 +17,116 @@ class hcmController extends Controller
 	//PAINEL HCM bam/hcm
 	//
 	//********************************************************************//
+
+	//********************************************************************//
+	//
+	//HCM FOLHA POR COLABORADOR
+	//
+	//********************************************************************//
+	public function minhaFolha(){
+		return view('bam.minhaFolha');
+	}
+
+	public function get_r044cal(){
+
+		setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+
+		$r044cals = r044cal::whereIn('r044cal.NumEmp', erp()->CodEmp)
+		->whereIn('r044cal.TipCal', [11])
+		->where('r044cal.SitCal', 'T')
+		->take(12)
+		->orderBy('DatPag', 'Desc')
+		->get(['IniCmp','FimCmp','DatPag','CodCal']);
+
+		$data=[];
+		foreach ($r044cals as $key => $r044cal) {
+
+				$data[$key]['CodCal']=$r044cal->CodCal;
+				$data[$key]['DatPag']=date('d/m/Y', strtotime($r044cal->DatPag));
+				$data[$key]['DatCmp']=strftime("%b/%Y", strtotime($r044cal->IniCmp));//date('M-Y', strtotime($r044cal->IniCmp));//.date('d/m/Y', strtotime($r044cal->FimCmp));
+		}
+
+		return response()->json($data);
+	}
+
+	public function r046verCodColDesEve(){
+
+		$CodCal = r046ver::join('r044cal', function ($join) {$join
+        	->on('r044cal.NumEmp', '=', 'r046ver.NumEmp')
+        	->on('r044cal.CodCal', '=', 'r046ver.CodCal');
+    	})
+    	->whereIn('r046ver.NumEmp', erp()->CodEmp)
+		->whereIn('r044cal.TipCal', [11])
+		->where('r044cal.SitCal', 'T')
+		->orderBy('r044cal.CodCal','Desc')
+		->first(['r044cal.CodCal','r044cal.DatPag','r044cal.PerRef']);
+
+		$r046vers = r046ver::select(
+			'r046ver.CodEve',
+			'r046ver.RefEve',
+			'r046ver.ValEve',
+			'r008evc.TipEve',
+			'r008evc.DesEve')
+
+		->join('r044cal', function ($join) {$join
+        	->on('r044cal.NumEmp', '=', 'r046ver.NumEmp')
+        	->on('r044cal.CodCal', '=', 'r046ver.CodCal');
+    	})
+ 		->join('r008evc', function ($join) {$join
+        	->on('r008evc.CodTab', '=', 'r046ver.TabEve')
+        	->on('r008evc.CodEve', '=', 'r046ver.CodEve');
+    	})
+    	->join('r034fun', function ($join) {$join
+        	->on('r034fun.NumEmp', '=', 'r046ver.NumEmp')
+        	->on('r034fun.TipCol', '=', 'r046ver.TipCol')
+        	->on('r034fun.NumCad', '=', 'r046ver.NumCad');
+    	})
+    	->whereIn('r046ver.NumEmp', erp()->CodEmp)
+    	->where('r046ver.CodCal', $CodCal->CodCal)
+		->where('r046ver.NumCad', 1)
+		->whereIn('r044cal.TipCal', [11])
+		->where('r044cal.SitCal', 'T')
+    	->get();
+
+    	$TotPro=0;
+    	$TotDsc=0;
+    	$TotOut=0;
+    	
+    	foreach ($r046vers as $key => $r046ver) {
+
+			if ($r046ver->TipEve<=2){
+				$TotPro+= $r046ver->ValEve;
+				$r046ver->VlrPro = $r046ver->ValEve;
+				$r046ver->VlrDsc = 0;
+				$r046ver->VlrOut = 0;
+			}
+
+			if ($r046ver->TipEve==(3)){
+				$TotDsc+= $r046ver->ValEve;
+				$r046ver->VlrPro = 0;
+				$r046ver->VlrDsc = $r046ver->ValEve;
+				$r046ver->VlrOut = 0;
+			}
+
+			if ($r046ver->TipEve>=(4)){
+				$TotOut+= $r046ver->ValEve;
+				$r046ver->VlrPro = 0;
+				$r046ver->VlrDsc = 0;
+				$r046ver->VlrOut = $r046ver->ValEve;
+			}
+    	}
+
+
+		$data['series'] = $r046vers->toArray();
+		$data['DatPag'] = date('d/m/Y', strtotime($CodCal->DatPag));
+		$data['MesAno'] = date('m/Y', strtotime($CodCal->PerRef));
+		$data['TotPro'] = $TotPro;
+    	$data['TotDsc'] = $TotDsc;
+    	$data['TotOut'] = $TotOut;
+    	$data['VlrLiq'] = $TotPro-$TotDsc;
+
+		return response()->json($data);
+	}
 	//********************************************************************//
 	//
 	//HCM CUSTO DA FOLHA

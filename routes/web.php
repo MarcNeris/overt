@@ -107,14 +107,17 @@ $this->group(['middleware'=>['auth'],'namespace'=>'Bam', 'prefix' =>'bam'], func
 	//HCM
 	//********************************************************************//
 	$this->get('hcm',					'bamController@hcm')					->name('bam.hcm');
+	$this->get('minhaFolha',			'hcmController@minhaFolha')				->name('bam.minhaFolha');
+	$this->get('get_r044cal',			'hcmController@get_r044cal')			->name('bam.get_r044cal');
 	$this->get('r034funQtdColTipSex',	'hcmController@r034funQtdColTipSex')	->name('bam.r034funQtdColTipSex');
 	$this->get('r034funNumLocQtdfun',	'hcmController@r034funNumLocQtdfun')	->name('bam.r034funNumLocQtdfun');
 	$this->get('r034funPosTraQtdFun',	'hcmController@r034funPosTraQtdFun')	->name('bam.r034funPosTraQtdFun');
 	$this->get('r034funNomCcuQtdFun',	'hcmController@r034funNomCcuQtdFun')	->name('bam.r034funNomCcuQtdFun');
 	$this->get('r046verTotEveDesEve',	'hcmController@r046verTotEveDesEve')	->name('bam.r046verTotEveDesEve');
+	$this->get('r046verCodColDesEve',	'hcmController@r046verCodColDesEve')	->name('bam.r046verCodColDesEve');
 
 	//********************************************************************//
-	//HCM
+	//TOP 5
 	//********************************************************************//
 	$this->get('top5',					'bamController@top5')					->name('bam.top5');
 });
@@ -237,9 +240,10 @@ $this->group(['middleware'=>['auth'],'namespace'=>'Senior', 'prefix' =>'senior']
 	//ROTAS PARA O SAPIENS
 	//	
 	//********************************************************************//
-	$this->get('e085cli','seniorController@e085cli')->name('senior.e085cli');
+	$this->get('get_e085cli','seniorController@get_e085cli')->name('senior.get_e085cli');
+	$this->get('clientes','seniorController@clientes')->name('senior.clientes');
 
-	$this->get('e085hcl','seniorController@e085hcl')->name('senior.e085hcl');
+	$this->get('get_e085hcl/{CodCli}','seniorController@get_e085hcl');
 	
 	$this->get('e070emp','seniorController@e070emp')->name('senior.e070emp');
 

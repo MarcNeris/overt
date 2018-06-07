@@ -20,7 +20,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="table-responsive">
-              <table id="usuarios" class="table table-striped table-bordered  table-hover" cellspacing="1" width="100%">
+              <table id="operacoes" class="table table-striped table-bordered  table-hover" cellspacing="1" width="100%">
                 <thead class="text-primary">
                   <tr>
                   </tr>
@@ -60,7 +60,7 @@
 
   $(document).ready(function (){
 
-    $('#usuarios').DataTable({
+    $('#operacoes').DataTable({
       responsive: true,
       processing: true,
       serverSide: true,

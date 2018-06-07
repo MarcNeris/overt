@@ -220,7 +220,7 @@ e600mesSalMesData = {
         splitLine: {show: true},
         axisLabel : {
             formatter: function(b){ 
-                var v=numeral(b).format('0.0a');
+                var v = numeral(b).format('0.0a');
                 return v;
             }  
         }

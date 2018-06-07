@@ -166,7 +166,7 @@
 <tbody>
 <tr>
 <td style="border-radius:2px; padding:3px 16px; color:#4C4C4C; font-weight:500; font-size:14px; border-color:#737373; border-width:1px; border-style:solid">
-<a href="{{route('crm.dashboard')}}" target="_blank" rel="noopener noreferrer" style="color:#4C4C4C; display:inline-block; text-decoration:none">Login
+<a href="{{url('../../bam/dashboard')}}" target="_blank" rel="noopener noreferrer" style="color:#4C4C4C; display:inline-block; text-decoration:none">Login
 </a>
 
 </td>

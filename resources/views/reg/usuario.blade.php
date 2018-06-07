@@ -79,7 +79,6 @@
  
                 <div class="row">
                   <div id="usersrole" class="col-md-8"></div>
-                  
                 </div>
 
             </div><!-- Fim do Painel  -->
@@ -131,7 +130,6 @@
         
 
         var idRole = data.idRegRol;
-        console.log(idRole);
 
         get_usersroles(idRole);
 

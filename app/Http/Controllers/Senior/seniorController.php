@@ -221,56 +221,43 @@ class seniorController extends Controller
 
 		return  response()->json($faturamento);
 	}
-	//
+	//********************************************************************//
 	//
 	//Retorna Tabela de Clientes
 	//
-	//
-	public function e085cli(){
-
-		//$e070emp = e070fil::where('CodEmp',1)->get();
-		//$e070emp = e070emp::find(1)->e070fil()->where('e070emp.CodEmp',1)->get();
-
-		//$e070emp = $e070emp->e070fil()->where('CodFil', 1)->get();
-
-		//$e070fil = e070fil::with('e070emp')->get();
-		//dd($e070fil);
-
-		//$bamprd001 = bamprd000::find(1)->bamprd001()->take(1)->get();
-			//->whereDate('created_at', date("Y-m-d"))
-			//->get();
-			//->latest('DatMov')
-			//->first();
-
-		//dd($bamprd001);
-
-
-		$e085cli=e085cli::all();
-		$e140nfv=e140isv::all();
-
-		dd($e085cli);
-		return $e085cli;
+	//********************************************************************//
+	public function get_e085cli(){
+		
+		$e085cli = e085cli::join('e085hcl','e085hcl.CodCli','e085cli.CodCli')
+		->whereIn('e085hcl.CodEmp', erp()->CodEmp)
+		->whereIn('e085hcl.CodEmp', erp()->CodFil)
+		->get(['e085cli.CodCli','NomCli','ApeCli','CgcCpf','EstCob','CidCob','BaiCob','CepCob','FonCli','IntNet']);
+		
+		return datatables()->of($e085cli)->toJson();
 	}
-	//
-	//
-	//RETORHA HISTÓRICO DE CLIENTES
-	//
-	//
 
-	public function e085hcl(){
+	public function clientes(){
+		return view('bam.clientes');
+	}
+	//********************************************************************//
+	//
+	//RETORNA HISTÓRICO DE CLIENTES
+	//
+	//********************************************************************//
+	public function get_e085hcl($CodCli){
 			
 		$e085hcl = e085hcl::whereIn('CodEmp', erp()->CodEmp)
-		->where('CodCli','1')
-		//->take(10)
-		->get(['DatMac','VlrMac']);
-
-		dd($e085hcl);
+		->whereIn('e085hcl.CodEmp', erp()->CodFil)
+		->where('CodCli', $CodCli)
+		->first(['CodCli','CatCli','LimApr','VlrLim','VlrMac','SalCre','MedAtr','MaiAtr','PrzMrt','DatUpg','VlrUpg','DatUfa','VlrUfa','DatUpe','VlrUpe']);
+		
+		return response()->json($e085hcl);
 	}
-    //
+    //********************************************************************//
     //
     //Consome WebServices do Sapiens
     //
-    //
+    //********************************************************************//
     public function WebService()
     {
     	try {

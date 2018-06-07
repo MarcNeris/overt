@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Senior\e140nfv;
 use App\Models\Senior\e140ipv;
+use App\Models\Senior\e085cli;
 use App\Models\Senior\erpemp000;//Corrigir
 use DB;
 
@@ -19,8 +20,6 @@ class faturamentoController extends Controller
 	//********************************************************************//
 	public function e140nfvSalMesCodCli(){
 
-		
-		
 		$lastData = e140nfv::whereIn('e140nfv.CodEmp', erp()->CodEmp)
 			->whereIn('e140nfv.CodFil', erp()->CodFil)
 			->max('DatEmi');
