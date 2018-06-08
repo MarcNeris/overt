@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Senior\r034fun;
 use App\Models\Senior\r044cal;
 use App\Models\Senior\r046ver;
+use App\Models\Senior\r034cpl;
 
 use DB;
 
@@ -23,9 +24,6 @@ class hcmController extends Controller
 	//HCM FOLHA POR COLABORADOR
 	//
 	//********************************************************************//
-	public function minhaFolha(){
-		return view('bam.minhaFolha');
-	}
 
 	public function get_r044cal(){
 
@@ -51,7 +49,16 @@ class hcmController extends Controller
 
 	public function r046verCodColDesEve($codcal){
 
-		$CodCal = r046ver::join('r044cal', function ($join) {$join
+		$r034fun = r034cpl::join('r034fun', function ($join) {$join
+        	->on('r034fun.NumEmp', '=', 'r034cpl.NumEmp')
+        	->on('r034fun.TipCol', '=', 'r034cpl.TipCol')
+        	->on('r034fun.NumCad', '=', 'r034cpl.NumCad');
+    	})
+		->whereIn('r034cpl.NumEmp', erp()->CodEmp)
+		->where('EmaCom', auth()->user()->email)
+		->first(['r034cpl.NumCad']);
+
+		$r044cal = r046ver::join('r044cal', function ($join) {$join
         	->on('r044cal.NumEmp', '=', 'r046ver.NumEmp')
         	->on('r044cal.CodCal', '=', 'r046ver.CodCal');
     	})
@@ -83,8 +90,8 @@ class hcmController extends Controller
         	->on('r034fun.NumCad', '=', 'r046ver.NumCad');
     	})
     	->whereIn('r046ver.NumEmp', erp()->CodEmp)
-    	->where('r046ver.CodCal', $CodCal->CodCal)
-		->where('r046ver.NumCad', 1)
+    	->where('r046ver.CodCal', $r044cal->CodCal)
+		->where('r046ver.NumCad', $r034fun->NumCad)
 		->whereIn('r044cal.TipCal', [11])
 		->where('r044cal.SitCal', 'T')
     	->get();
@@ -95,40 +102,47 @@ class hcmController extends Controller
     	
     	foreach ($r046vers as $key => $r046ver) {
 
-    		$r046ver->CodEve = str_pad($r046ver->CodEve, 4, '0',STR_PAD_LEFT).' - '.$r046ver->DesEve;
+    		$r046ver->CodEve = str_pad($r046ver->CodEve, 3, '0',STR_PAD_LEFT).' - '.$r046ver->DesEve;
 
 			if ($r046ver->TipEve<=2){
 				$TotPro+= $r046ver->ValEve;
 				$r046ver->VlrPro = 'R$ '.number_format($r046ver->ValEve, 2, ',', '.');
-				$r046ver->VlrDsc = 0;
-				$r046ver->VlrOut = 0;
+				$r046ver->VlrDsc = '';
+				$r046ver->VlrOut = '';
 			}
 
 			if ($r046ver->TipEve==(3)){
 				$TotDsc+= $r046ver->ValEve;
-				$r046ver->VlrPro = 0;
+				$r046ver->VlrPro = '';
 				$r046ver->VlrDsc = 'R$ '.number_format($r046ver->ValEve, 2, ',', '.');
-				$r046ver->VlrOut = 0;
+				$r046ver->VlrOut = '';
 			}
 
-			if ($r046ver->TipEve>=(4)){
+			if ($r046ver->TipEve==(4)){
 				$TotOut+= $r046ver->ValEve;
-				$r046ver->VlrPro = 0;
-				$r046ver->VlrDsc = 0;
+				$r046ver->VlrPro = '';
+				$r046ver->VlrDsc = '';
 				$r046ver->VlrOut = 'R$ '.number_format($r046ver->ValEve, 2, ',', '.');
 			}
     	}
 
-
 		$data['series'] = $r046vers->toArray();
-		$data['TotCal']['DatPag'] = date('d/m/Y', strtotime($CodCal->DatPag));
-		$data['TotCal']['MesAno'] = date('m/Y', strtotime($CodCal->PerRef));
+		$data['TotCal']['DatPag'] = date('d/m/Y', strtotime($r044cal->DatPag));
+		$data['TotCal']['MesAno'] = date('m/Y', strtotime($r044cal->PerRef));
     	$data['TotCal']['TotOut'] = 'R$ '.number_format($TotOut, 2, ',', '.');
 		$data['TotCal']['TotPro'] = 'R$ '.number_format($TotPro, 2, ',', '.');
     	$data['TotCal']['TotDsc'] = 'R$ '.number_format($TotDsc, 2, ',', '.');
     	$data['TotCal']['VlrLiq'] = 'R$ '.number_format(($TotPro-$TotDsc), 2, ',', '.');
 
 		return response()->json($data);
+	}
+	//********************************************************************//
+	//
+	//VIEW FOLHA DO COLABORDOR
+	//
+	//********************************************************************//
+	public function folha(){
+		return view('bam.folha');
 	}
 	//********************************************************************//
 	//

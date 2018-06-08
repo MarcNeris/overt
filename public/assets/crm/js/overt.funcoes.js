@@ -349,11 +349,9 @@ $('.CepEnd').blur(function(){
 
 window.onresize = function() {
   setTimeout(function(){
-  //for(var i=0;i<20;i++){
     $('.charts').each(function(){
       var id = $(this).attr('_echarts_instance_');
       window.echarts.getInstanceById(id).resize();
     });
   },1000);
-  //}
 };

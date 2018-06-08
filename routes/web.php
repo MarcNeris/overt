@@ -107,7 +107,7 @@ $this->group(['middleware'=>['auth'],'namespace'=>'Bam', 'prefix' =>'bam'], func
 	//HCM
 	//********************************************************************//
 	$this->get('hcm',					'bamController@hcm')					->name('bam.hcm');
-	$this->get('minhaFolha',			'hcmController@minhaFolha')				->name('bam.minhaFolha');
+	$this->get('folha',					'hcmController@folha')					->name('bam.folha');
 	$this->get('get_r044cal',			'hcmController@get_r044cal')			->name('bam.get_r044cal');
 	$this->get('r034funQtdColTipSex',	'hcmController@r034funQtdColTipSex')	->name('bam.r034funQtdColTipSex');
 	$this->get('r034funNumLocQtdfun',	'hcmController@r034funNumLocQtdfun')	->name('bam.r034funNumLocQtdfun');

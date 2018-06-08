@@ -148,6 +148,7 @@ class seniorController extends Controller
 		->toArray();
 		return datatables()->of($erpemp000)->toJson();
 	}
+
 	//********************************************************************//
 	//
 	//Cadastra e Retorna View com Empresas e Filiais Sapiens

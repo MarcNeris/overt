@@ -62,12 +62,12 @@
                 
               </div>
                    
-            </div><!-- Fim do Painel --> 
+            </div>
             <div class="tab-pane" id="papeis">
                 <div class="row">
                   
                                   
-                  <div class="col-md-8">
+                  <div class="col-md-12">
                     <div class="form-group bmd-form-group is-filled">
                       <label for="DscRol" class="bmd-label-floating">Perfil do Usuário</label>
                       <input type="hidden" class="form-control valid" id="CodRol" name="CodRol">
@@ -78,11 +78,11 @@
                 </div>
  
                 <div class="row">
-                  <div id="usersrole" class="col-md-8"></div>
+                  <div id="usersrole" class="col-md-12"></div>
                 </div>
 
-            </div><!-- Fim do Painel  -->
-          </div><!-- Fim da Tab Contents -->
+            </div>
+          </div>
           <div class="modal-footer">
             <div class="pull-left">
                 <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Voltar' />
@@ -95,58 +95,47 @@
           </div>
         </form>
       </div>
-    </div> <!-- wizard container -->
+    </div> 
   </div>
-</div><!-- end row -->
+</div>
 
 @stop
 @section('js')
 
 
-
-
-
-
-
-
 <script type="text/javascript">
 
-//
+//********************************************************************//
 //Busca Usuário
-//
+//********************************************************************//
   $('.EmlUsu').blur(function(){
     var EmlUsu = $(this).val();
 
     $.ajax({
       type: "GET",
-      url: "{{url('reg/get_usuario')}}"+EmlUsu, //CepEnd,
+      url: "{{url('reg/get_usuario')}}"+EmlUsu,
       dataType : 'json',
       beforeSend: function(){
         
       },
       success: function(data){
 
-          //return showNotification( 'CEP Inválido :(', 'danger');
-        
-
         var idRole = data.idRegRol;
 
         get_usersroles(idRole);
 
         $("#NomUsu").val(data.NomUsu);
-        $("#DscRol").val(data.DscRol);
+        $("#DscRol").val(data.NomRol);
   
       },
       error: function(error){
-        //showNotification( 'Endereço não Localizado :(<br>"'+error.status+':'+error.statusText+'"', 'danger');
       }
     });
   })
 
-
-
-
-
+//********************************************************************//
+//Busca Papéis do Usuario
+//********************************************************************//
 
   $('#DscRol').autocomplete({
      
@@ -158,36 +147,29 @@
       get_usersroles(suggestion.data);
     },
     onInvalidateSelection: function() {
-      //document.getElementById("NomRol").focus();
+
       $("#DscRol").focus();
-      showNotification( 'Por favor, selecione o Perfil do Usuário...', 'info');
+      //showNotification( 'Por favor, selecione o Perfil do Usuário...', 'info');
     }
   });
 
 </script>
 
 <script type="text/javascript">
-
-
+//********************************************************************//
+//Busca Tarefas do Usuario
+//********************************************************************//
 var get_usersroles = function(idRole){
-  var usersroles = '<span class="badge badge-primary">${NomTsk}</span>';
-
-  $.template( "movieTemplate", usersroles);
-
   
+  var usersroles = '<li class="badge badge-primary">${NomTsk}</li>';
+
     $.ajax({
       type: "GET",
       url: "{{url('reg/get_usersrole')}}/"+idRole,
       dataType : 'json',
       success: function(usersrole){
-        console.log(usersrole);
         $( "#usersrole" ).empty();
-          $.tmpl( "movieTemplate", usersrole ).appendTo( "#usersrole" );
-        $.each( usersrole, function(k, NomTsk){
-
-          $.tmpl( "movieTemplate", NomTsk ).appendTo( "#usersrole" );
-
-        });
+          $.tmpl( usersroles, usersrole.roles ).appendTo('#usersrole');
       }
     })
 }
