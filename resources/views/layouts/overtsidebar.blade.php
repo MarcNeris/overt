@@ -25,7 +25,7 @@
         <p>Dashboard</p>
     </a>
 </li>
-<li class="nav-item active ">
+<li class="nav-item">
     <a class="nav-link collapsed" aria-expanded="false" href="#bam" data-toggle="collapse">
         <i class="material-icons">track_changes</i>
         <p> Activity Monitor

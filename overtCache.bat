@@ -9,3 +9,4 @@ php artisan route:clear
 php artisan view:clear
 php artisan config:cache
 composer dump-autoload
+php artisan queue:work

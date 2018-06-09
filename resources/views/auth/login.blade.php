@@ -24,7 +24,7 @@
         </div>
         <div class="col-md-12">
           <div class="form-group bmd-form-group is-filled">
-            <label for="RegFed" class="bmd-label-floating">{{ __('password') }}</label>
+            <label for="RegFed" class="bmd-label-floating">{{ __('senha') }}</label>
             <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
              @if ($errors->has('password'))
               <span class="invalid-feedback">

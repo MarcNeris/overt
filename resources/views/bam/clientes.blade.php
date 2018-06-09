@@ -65,10 +65,18 @@
       processing: true,
       serverSide: true,
       toolbar: ".toolbar",
-      aaSorting: [[0, "asc"]],
+      aaSorting: [[1, "asc"]],
       ajax: "{{route('senior.get_e085cli')}}",
       columns: [
-        {data: 'CodCli', title: 'Código'},
+        {data: null, title: 'Histórico',
+          className: "center",
+          orderable: false,
+          searchable: false,
+          fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+            $(nTd).html('<a href="#"'+'Histórico'+'" class="badge badge-info"><i class="material-icons">navigate_next</i></a>');
+          }
+        },
+        //{data: 'CodCli', title: 'Código'},
         {data: 'NomCli', title: 'Cliente'},
         {data: 'ApeCli', title: 'Fantasia'},
         {data: 'CgcCpf', title: 'CNPJ/CPF'},

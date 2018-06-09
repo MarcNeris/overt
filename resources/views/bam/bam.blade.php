@@ -60,11 +60,11 @@
 
 @section('js')
 <script type="text/javascript">
-//
+//********************************************************************//
 //
 // Tabela bamprd000s Real Time Faturamento
 //
-//
+//********************************************************************//
 var bamprd000s = echarts.init(document.getElementById('bamprd000s'), 'macarons');
 
 

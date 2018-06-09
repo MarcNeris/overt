@@ -213,13 +213,17 @@ $(function() {
     var element = $('ul.nav a').filter(function() {
         return this.href == url;
     }).parent().addClass('active');
-    while (true) {
-        if (element.is('li')) {
-            element = element.parent().parent().addClass('active');
-        } else {
-            break;
-        }
-    }
+
+    element = element.parent().parent().addClass('show');
+    //    console.log(element);
+
+    // while (true) {
+    //     if (element.is('li')) {
+    //         element = element.parent().parent().addClass('active');
+    //     } else {
+    //         break;
+    //     }
+    // }
 });
 //********************************************************************//
 //
