@@ -100,6 +100,18 @@ return [
             'prefix' => '',
         ],
 
+
+        'BemBrasil' => [
+            'driver'    => 'sqlsrv',
+            'host'      => 'MARCNERIS',
+            'port'      => '1433',
+            'database'  => 'Vetorh',
+            'username'  => 'vetorh',
+            'password'  => 'vetorh',
+            'charset'   => 'utf8',
+            'prefix'    => '',
+        ],
+
     ],
 
     /*

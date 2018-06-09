@@ -111,14 +111,28 @@ class hcmController extends Controller
 				$r046ver->VlrOut = '';
 			}
 
-			if ($r046ver->TipEve==(3)){
+			if ($r046ver->TipEve==5){
+				$TotPro+= $r046ver->ValEve;
+				$r046ver->VlrPro = 'R$ '.number_format($r046ver->ValEve, 2, ',', '.');
+				$r046ver->VlrDsc = '';
+				$r046ver->VlrOut = '';
+			}
+
+			if ($r046ver->TipEve==3){
 				$TotDsc+= $r046ver->ValEve;
 				$r046ver->VlrPro = '';
 				$r046ver->VlrDsc = 'R$ '.number_format($r046ver->ValEve, 2, ',', '.');
 				$r046ver->VlrOut = '';
 			}
 
-			if ($r046ver->TipEve==(4)){
+			if ($r046ver->TipEve==6){
+				$TotDsc+= $r046ver->ValEve;
+				$r046ver->VlrPro = '';
+				$r046ver->VlrDsc = 'R$ '.number_format($r046ver->ValEve, 2, ',', '.');
+				$r046ver->VlrOut = '';
+			}
+
+			if ($r046ver->TipEve==4){
 				$TotOut+= $r046ver->ValEve;
 				$r046ver->VlrPro = '';
 				$r046ver->VlrDsc = '';
@@ -142,6 +156,7 @@ class hcmController extends Controller
 	//
 	//********************************************************************//
 	public function folha(){
+
 		return view('bam.folha');
 	}
 	//********************************************************************//

@@ -31,22 +31,31 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="info-icon">
                     <div class="icon text-danger">
                         <i class="pe-7s-graph2"></i>
                     </div>
                     <h3>CRM | Administração de Vendas</h3>
-                    <p class="description">Fizemos uma solução perfeita para sua organização gerenciar cada oporutindade de forma simples e eficiente.</p>
+                    <p class="description">Administração de vendas capaz de gerenciar cada oporutindade de forma simples e eficiente.</p>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="info-icon">
                     <div class="icon text-danger">
                         <i class="pe-7s-graph1"></i>
                     </div>
                     <h3>BAM | Business Activity Monitoring</h3>
-                    <p class="description">Extraímos todas as informações dos seus documentos eletrônicos, gerando uma análise de negócios precisa.</p>
+                    <p class="description">Monitoramento real time das operações, gerando uma análise de negócios precisa.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="info-icon">
+                    <div class="icon text-danger">
+                        <i class="pe-7s-graph"></i>
+                    </div>
+                    <h3>HCM Cloud Panel</h3>
+                    <p class="description">Solução de monitoramento de recursos humanos para gestão de RH.</p>
                 </div>
             </div>
         </div>

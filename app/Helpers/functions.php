@@ -27,6 +27,15 @@ function trataValor($valor)
 //RETORNA OBJETO COM EMPRESAS E FILIAS DO SAPIENS
 //
 //********************************************************************//
+
+function vetorh(){
+    return 'vetorh';
+}
+
+function sapiens(){
+    return 'sapiens';
+}
+
 function erp(){
     
     $erpemp000s = erpemp000::select('id','CodEmp','SigEmp','CodFil','SigFil','SitEmp')
@@ -82,7 +91,7 @@ function soNumero($str)
 //ATIVA O MODULO QUE ESTA SENDO USADO
 //
 //********************************************************************//
-function ativaModulo($module=null){
+function ativaModulo($module = null){
 
     Session::put('module', $module);
 }

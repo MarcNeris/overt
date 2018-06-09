@@ -60,6 +60,12 @@
                 </a>
             </li>
             <li class="nav-item ">
+                <a class="nav-link" href="{{ route('senior.clientes') }}">
+                  <span class="sidebar-mini"> Cli </span>
+                  <span class="sidebar-normal"> Clientes </span>
+                </a>
+            </li>
+            <li class="nav-item ">
                 <a class="nav-link" href="{{ route('bam.controladoria') }}">
                   <span class="sidebar-mini"> CTL </span>
                   <span class="sidebar-normal"> Controladoria </span>
@@ -69,6 +75,12 @@
                 <a class="nav-link" href="{{ route('bam.hcm') }}">
                   <span class="sidebar-mini"> HCM </span>
                   <span class="sidebar-normal"> Recursos Humanos </span>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('bam.folha') }}">
+                  <span class="sidebar-mini"> HCM </span>
+                  <span class="sidebar-normal"> Folha </span>
                 </a>
             </li>
         </ul>
@@ -114,7 +126,6 @@
         <p>Tarefas</p>
     </a>
 </li>
-
 
 <li class="nav-item">
     <a class="nav-link" href="{{ route('crm.dashboard') }}">

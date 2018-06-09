@@ -44,5 +44,6 @@ class LoginController extends Controller
         ativaEmpresa();
 
         ativaModulo();
+
     }
 }

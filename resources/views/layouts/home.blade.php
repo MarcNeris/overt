@@ -4,12 +4,12 @@
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="{{ asset('assets/img/crm-icon.png') }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>overt | Intelligece, tecnologia para Business Activity Monitoring!</title>
+    <title>overt | intelligence, tecnologia para transformação digital!</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <link href="assets/css/gaia.css" rel="stylesheet"/>
     <link href='https://fonts.googleapis.com/css?family=Cambo|Poppins:400,600' rel='stylesheet' type='text/css'>
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href="assets/css/fonts/pe-icon-7-stroke.css" rel="stylesheet">
 </head>
 <body>
@@ -23,7 +23,7 @@
                     <span class="icon-bar bar3"></span>
                 </button>
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="">overt | Intelligence</a> 
+                    <a class="navbar-brand" href="">overt | intelligence</a> 
                 </div>
             </div>
             <div class="collapse navbar-collapse">
@@ -68,7 +68,7 @@
             <div class="row">
                 <hr>
                 <div class="copyright">
-                     © <script> document.write(new Date().getFullYear()) </script> overt | Intelligence, for a better business
+                     © <script> document.write(new Date().getFullYear()) </script> overt | intelligence, for challenger business
                 </div>
             </div>
         </div>

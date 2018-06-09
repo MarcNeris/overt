@@ -6,9 +6,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     <meta xttp-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>overt | intelligence</title>
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+    <title>overt | challenger business</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
     <link href="{{ asset('assets/crm/css/material-dashboard.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('assets/crm/css/jquery.auto-complete.css') }}" rel="stylesheet"/>
     @yield('css')

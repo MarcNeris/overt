@@ -13,7 +13,7 @@
               <i class="material-icons">group</i>
           </div>
           <div class="card-header" id="TitCal">
-            <h4 class="card-title">Folha de Pagamento<br><small class="description"></small></h4>
+            <h4 class="card-title">HCM - Folha de Pagamento<br><small class="description"></small>PayCheck</h4>
         </div>
       </div>
       <div class="card-body">
@@ -70,7 +70,7 @@
 
 function CodCmp(CodCal){
   
-  var TitCal = '<h4 class="card-title">Folha de Pagamento - <strong>Competência ${MesAno}</strong></h4>';
+  var TitCal = '<h4 class="card-title">HCM - Folha de Pagamento | <strong> ${MesAno}</strong></h4>';
   
   var CodEve = '<tr><td>${CodEve}</td><td class="text-right">${RefEve}</td><td class="text-right text-success">${VlrPro}<span class="text-primary"><b>${VlrOut}</b></span></td><td class="text-right text-danger">${VlrDsc}</td></tr>';
   

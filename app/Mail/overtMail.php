@@ -46,7 +46,7 @@ class overtMail extends Mailable //implements ShouldQueue
                 'EmlFin' => $this->logeml001['EmlFin'],
                 'NomFta' => $this->logeml001['NomFta'],
                 'DatEml' => date('d/m/Y')
-            ])
+                ])
             ->view('crm.mail');
 
     }
