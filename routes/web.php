@@ -96,6 +96,8 @@ $this->group(['middleware'=>['auth'],'namespace'=>'Bam', 'prefix' =>'bam'], func
 	//FATURAMENTO
 	//********************************************************************//
 	$this->get('faturamento',			'bamController@faturamento')				->name('bam.faturamento');
+	$this->get('maps',			'faturamentoController@maps')				->name('bam.maps');
+
 	$this->get('e140nfvSalMesCodCli',	'faturamentoController@e140nfvSalMesCodCli')->name('bam.e140nfvSalMesCodCli');
 	$this->get('e140ipv',				'faturamentoController@e140ipv')			->name('bam.e140ipv');
 	$this->get('e140nfv/{CodEmp}/{CodFil}/{CodTns}','faturamentoController@e140nfv');

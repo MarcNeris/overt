@@ -76,7 +76,7 @@ var bamprd000sData = {
      tooltip: {
         trigger: 'axis',
         formatter: function(a){
-            return formatarTootip(a);
+            return formatarTooltip(a);
         },
         axisPointer: {
             type: 'cross',
@@ -229,7 +229,7 @@ bamprd000BarraData = {
     tooltip: {
         trigger:'axis',
         formatter: function(a){
-            return formatarTootip(a);
+            return formatarTooltip(a);
         },
     },
     toolbox: {

@@ -13,6 +13,15 @@ use DB;
 
 class faturamentoController extends Controller
 {
+	//********************************************************************//
+	//
+	//e140nfv Saldo Mensal por Codigo do Cliente
+	//
+	//********************************************************************//
+	public function maps(){
+		return view('bam.maps');
+	}
+
     //********************************************************************//
 	//
 	//e140nfv Saldo Mensal por Codigo do Cliente
