@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Session;
+use Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,7 +25,6 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->app['request']->server->set('HTTPS', $this->app->environment() != 'local');
-
     }
 
     /**

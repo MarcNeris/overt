@@ -23,6 +23,7 @@ class financasController extends Controller
 	//MONITORAMENTO SALDO DA CONTA INTERNA
 	//
 	//********************************************************************//
+	
 	public function e600mesSalMesNumCco(){
 
 		$NumCcos =  e600mes::whereIn('e600mes.CodEmp', erp()->CodEmp)

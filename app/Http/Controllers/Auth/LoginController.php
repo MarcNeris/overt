@@ -42,7 +42,7 @@ class LoginController extends Controller
     protected function authenticated()
     {
         ativaEmpresa();
-
+    
         ativaModulo();
 
     }

@@ -29,7 +29,8 @@ class bamController extends Controller
     //********************************************************************//
     public function dashboard()
     {   
-        ativaModulo('BAM');         
+        ativaModulo('BAM');
+        ativaEmpresa();       
 
         return view('bam.dashboard');
     }
@@ -38,6 +39,7 @@ class bamController extends Controller
     //
     public function financas()
     {   
+
         if (Gate::denies('Finanças', Session::get('idRegEmp'))) {
 
             abort(403, 'Olá, a Permissão "Finanças" não está disponível para seu perfil nesta Empresa.');

@@ -1,13 +1,17 @@
 
 (function() {
     isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
-    $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
+   
     if (isWindows && $(window).width() > 991)  {
-        $('html').addClass('perfect-scrollbar-on');
     } else {
         $('html').addClass('perfect-scrollbar-off');
     }
 })();
+
+$('html').addClass('perfect-scrollbar-on');
+
+$('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
+
 
 var breakCards = true;
 
@@ -39,7 +43,6 @@ $(document).ready(function() {
     md.initSidebarsCheck();
 
     
-
     if ($('body').hasClass('sidebar-mini')) {
          md.misc.sidebar_mini_active = true;
     }

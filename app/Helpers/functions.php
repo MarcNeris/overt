@@ -27,15 +27,6 @@ function trataValor($valor)
 //RETORNA OBJETO COM EMPRESAS E FILIAS DO SAPIENS
 //
 //********************************************************************//
-
-function vetorh(){
-    return 'vetorh';
-}
-
-function sapiens(){
-    return 'sapiens';
-}
-
 function erp(){
     
     $erpemp000s = erpemp000::select('id','CodEmp','SigEmp','CodFil','SigFil','SitEmp')
@@ -59,8 +50,11 @@ function erp(){
 
     return $erp;
 }
-
-
+//********************************************************************//
+//
+//SOMA DIAS A UMA DATA
+//
+//********************************************************************//
 function sumDay($Date, int $days){
     
     $newDate = date('Y-m-d', strtotime($Date."$days days"));
@@ -75,6 +69,7 @@ function sumDay($Date, int $days){
 function trataCNPCPF($string)
 {
     $string=preg_replace("/\D+/", "", $string);
+
     return $string;
 };
 //********************************************************************//
@@ -101,7 +96,9 @@ function ativaModulo($module = null){
 //
 //********************************************************************//
 function Meses(){
+    
     $Meses=[['Dez',12],['Nov',11],['Out',10],['Set',9],['Ago',8],['Jul',7],['Jun',6],['Mai',5],['Abr',4],['Mar',3],['Fev',2],['Jan',1]];
+    
     return $Meses;
 }
 //********************************************************************//

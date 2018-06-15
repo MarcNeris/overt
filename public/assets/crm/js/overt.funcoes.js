@@ -275,7 +275,6 @@ $('.timepicker').datetimepicker({
 $(function(){
     $('.exigido').blur(function(){
         var campo = $(this).val();
-        //var name = $(this).id();
         if ( campo=='' ) {
             $(this).focus();
             showNotification( 'Precisamos dessa informação...', 'danger');
@@ -287,10 +286,10 @@ $(function(){
 //FORMATA APENAS NUMEROS
 //
 //********************************************************************//
-function apenasNumeros(string) 
-{
+function apenasNumeros(string){
+
   var numsStr = string.replace(/[^0-9]/g,'');
-   return parseInt(numsStr);
+  return parseInt(numsStr);
 };
 //********************************************************************//
 //
@@ -350,7 +349,6 @@ $('.CepEnd').blur(function(){
 //Redimensionar os Gráficos
 //
 //********************************************************************//
-
 window.onresize = function() {
   setTimeout(function(){
     $('.charts').each(function(){

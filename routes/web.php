@@ -5,9 +5,8 @@
 	//OVERT INTELLIGENCE
 	//
 	//********************************************************************//
-
-
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/login', 'HomeController@index')->name('login');
 Route::get('/', 'HomeController@overt')->name('overt');
 	//********************************************************************//
 	//
