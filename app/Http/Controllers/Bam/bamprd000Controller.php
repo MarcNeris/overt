@@ -82,6 +82,8 @@ class bamprd000Controller extends Controller
 
     public function get_bamprd000($CodBam){
 
+
+
         //Log::info("Início do Job getBamJob");
             
             
@@ -191,8 +193,8 @@ class bamprd000Controller extends Controller
             // $this->dispatch(new getBamJob());
         //Log::info("Fim do Job getBamJob");
         
-        //$this->dispatch(new faturamentoDiario());
-        $queue = $this->dispatch(new faturamentoDiario());
+        $this->dispatch(new faturamentoDiario());
+        //$queue = $this->dispatch(new faturamentoDiario());
 
 
         $bamprd001 = bamprd001::select(

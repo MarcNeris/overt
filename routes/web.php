@@ -106,7 +106,7 @@ $this->group(['middleware'=>['auth'],'namespace'=>'Bam', 'prefix' =>'bam'], func
 	$this->get('controladoria',			'bamController@controladoria')					->name('bam.controladoria');
 	$this->get('e650salSalMesCtaRed',	'controladoriaController@e650salSalMesCtaRed')	->name('bam.e650salSalMesCtaRed');
 	//********************************************************************//
-	//HCM
+	//HCM BAM
 	//********************************************************************//
 	$this->get('hcm',					'bamController@hcm')					->name('bam.hcm');
 	$this->get('folha',					'hcmController@folha')					->name('bam.folha');
@@ -270,3 +270,19 @@ $this->group(['middleware'=>['auth'],'namespace'=>'Senior', 'prefix' =>'senior']
 //********************************************************************//
 Route::get('getRowDetailsData','DataTablesController@getRowDetailsData')->name('getRowDetailsData');
 //********************************************************************//
+//********************************************************************//
+//
+//ROTAS PARA O HCM OVERT
+//	
+//********************************************************************//
+$this->group(['middleware'=>['auth'],'namespace'=>'Hcm', 'prefix' =>'hcm'], function()
+{
+
+	$this->get('sync',					'syncController@sync')					->name('hcm.sync');
+	$this->get('rep',					'repController@rep')					->name('hcm.rep');
+	$this->get('get_hcmcol000',		'repController@get_hcmcol000')			->name('hcm.get_hcmcol000');
+	$this->get('monitoramento',			'repController@monitoramento')			->name('hcm.monitoramento');
+	$this->get('r034funUpload',			'uploadController@r034funUpload')		->name('hcm.r034funUpload');
+	$this->any('upd_repusers',			'repController@upd_repusers');
+
+});

@@ -34,20 +34,19 @@ class overtMail extends Mailable //implements ShouldQueue
     {
         
         return $this->from('overt@overt.com.br', $this->logeml001['NomFta'])
-            ->subject($this->logeml001['NomFta'].' | '.$this->logeml001['EmlTit'])
-            ->bcc('overt@overt.com.br')
-            ->with([
-                'NomDst' => $this->logeml001['NomDst'],
-                'EmlDst' => $this->logeml001['EmlDst'],
-                'NomEmt' => $this->logeml001['NomEmt'],
-                'EmlEmt' => $this->logeml001['EmlEmt'],
-                'EmlTit' => $this->logeml001['EmlTit'],
-                'EmlDsc' => $this->logeml001['EmlDsc'],
-                'EmlFin' => $this->logeml001['EmlFin'],
-                'NomFta' => $this->logeml001['NomFta'],
-                'DatEml' => date('d/m/Y')
-                ])
-            ->view('crm.mail');
-
+        ->subject($this->logeml001['NomFta'].' | '.$this->logeml001['EmlTit'])
+        ->bcc('overt@overt.com.br')
+        ->with([
+            'NomDst' => $this->logeml001['NomDst'],
+            'EmlDst' => $this->logeml001['EmlDst'],
+            'NomEmt' => $this->logeml001['NomEmt'],
+            'EmlEmt' => $this->logeml001['EmlEmt'],
+            'EmlTit' => $this->logeml001['EmlTit'],
+            'EmlDsc' => $this->logeml001['EmlDsc'],
+            'EmlFin' => $this->logeml001['EmlFin'],
+            'NomFta' => $this->logeml001['NomFta'],
+            'DatEml' => date('d/m/Y')
+            ])
+        ->view('crm.mail');
     }
 }

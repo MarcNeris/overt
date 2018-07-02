@@ -21,9 +21,6 @@
 
 @endsection
 
-
-
 @section('js')
-
 
 @stop

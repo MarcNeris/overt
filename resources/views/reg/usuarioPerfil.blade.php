@@ -15,9 +15,7 @@
         </div>
       </div>
       <div class="card-body">
-         <div class="row">
-                  
-                                  
+         <div class="row">                
           <div class="col-md-8">
             <div class="form-group bmd-form-group is-filled">
               <label for="DscRol" class="bmd-label-floating">Perfil do Usuário</label>
@@ -25,27 +23,18 @@
               <input type="text" value="{{$usersrole->DscRol}}" class="form-control valid" id="DscRol" name="DscRol" required="" aria-required="true" aria-invalid="false">
             </div>
           </div>
-
         </div>
-
         <div class="row">
           <div id="usersrole" class="col-md-8"></div>
-          
         </div>
-
     </div>
   </div>
 </div>
-
-
-
 @stop
 
 @section('js')
 
 <script src="{{ asset('assets/crm/js/dataTables.js') }}"></script>
-
-
 <script type="text/javascript">
 
 var get_usersroles = function(idRole){
