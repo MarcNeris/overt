@@ -5,29 +5,29 @@ namespace App\Http\Controllers\Hcm;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\hcmcol000;
+use App\Http\Controllers\FB;
+use Session;
+
 
 class repController extends Controller
 {
     
-    public function monitoramento(){
+    public function monitoramento($UsuUid,$CNPJ){
+
+
+        return view('hcm.monitoramento', compact('UsuUid'));
 
     }
 
 
     public function rep(){
 
-        return view('hcm.rep');
-
-
-    	$email = auth()->user()->email;
-
-    	//dd($email);
-
-    	$email = 'marceloneris@hotmail.com';
-    	$pass = 'angra@@2';
-
-    	return view('hcm.rep', compact('email','pass'));
+        $RegFed = Session::get('RegFed');
+    	
+    	return view('hcm.rep', compact('RegFed'));
     }
+
+    
 
     public function upd_repusers(Request $Request){
 

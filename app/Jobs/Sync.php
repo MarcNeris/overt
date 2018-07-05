@@ -7,9 +7,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use App\Http\Controllers\Hcm\syncController;
 use App\Http\Controllers\Hcm\uploadController;
 
-class r034funUpload implements ShouldQueue
+class Sync implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -30,6 +31,6 @@ class r034funUpload implements ShouldQueue
      */
     public function handle()
     {
-       $r034funUpload = new r034funUpload();
+        uploadController::employersUpload();
     }
 }

@@ -14,16 +14,17 @@ class CreateErpemp000sTable extends Migration
     public function up()
     {
         Schema::create('erpemp000s', function (Blueprint $table) {
-            $table->integer     ('id')          ->unsigned();
+            $table->increments     ('id');
             $table->integer     ('user_id')     ->unsigned()->comment('Usuário x Empresa');
             $table->foreign     ('user_id')     ->references('id')->on('users');
             $table->integer     ('CodEmp')      ->unsigned()->comment('Código da Empresa');
             $table->integer     ('CodFil')      ->unsigned()->comment('Código da Filial');
+            $table->string      ('RegFed',20)   ->comment('Registro Federal');
             $table->integer     ('SitEmp')      ->unsigned()->comment('Situação');
-            $table->string      ('NomSis',200)      ->comment('Nome do Sistema');
-            $table->string      ('SigEmp',200)      ->comment('Sigla da Empresa');
-            $table->string      ('SigFil',200)      ->comment('Sigla da Filial');
-            $table->primary     (['id','user_id','CodEmp','CodFil']);
+            $table->string      ('NomSis',30)   ->unsigned()->comment('Nome do Sistema');
+            $table->string      ('SigEmp',200)  ->comment('Sigla da Empresa');
+            $table->string      ('SigFil',200)  ->comment('Sigla da Filial');
+            $table->unique     (['user_id','CodEmp','CodFil','NomSis']);
             $table->timestamps();
         });
     }

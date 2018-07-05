@@ -63,5 +63,19 @@ class FB extends Controller
 
 	}
 
+	public static function WR($reference,$data){
+
+		$pass = ServiceAccount::fromJsonFile(__DIR__.'/hcmrep-overt-firebase-adminsdk-zmdfu-fe9e3de9cd.json');
+
+		$Firedb = (new Factory)
+
+		->withServiceAccount($pass)
+
+		->withDatabaseUri('https://hcmrep-overt.firebaseio.com/')
+
+		->create();
+
+		return $Firedb->getDatabase()->getReference($reference)->set($data);
+	}
 }
 

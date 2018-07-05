@@ -23,6 +23,8 @@ use App\Models\Senior\e600mcc;
 use App\Models\Senior\e640lct;
 use App\Models\Senior\e640lot;
 use App\Models\Senior\e605ext;
+use App\Models\Senior\r030fil;
+use App\Models\Senior\r030emp;
 use App\Models\Senior\erpemp000;
 use App\Models\Senior\erptns000;
 use App\Models\regempusu;
@@ -113,39 +115,96 @@ class seniorController extends Controller
 		->join('regpsa000s', 'regemp000s.idRegPsa','=','regpsa000s.id')
 		->value('RegFed');
 
-		$CodEmp = e070emp::select('e070fil.CodEmp')
-		->join('e070fil', function ($join) {$join
-        	->on('e070emp.CodEmp', '=', 'e070fil.CodEmp');
-        })
-        ->where('NumCgc', $RegFed)
-		->value('CodEmp');
 
+		if(DB::connection('sapiens')){
 
-		$e070fils = e070emp::select('SigEmp','e070fil.CodEmp','SigFil','CodFil','NumCgc')
-		->join('e070fil', function ($join) {$join
-        	->on('e070emp.CodEmp', '=', 'e070fil.CodEmp');
-        })
-        ->where('e070fil.CodEmp', $CodEmp)
-		->get()->toArray();
+			$CodErp = e070emp::select('e070fil.CodEmp')
+			->join('e070fil', function ($join) {$join
+	        	->on('e070emp.CodEmp', '=', 'e070fil.CodEmp');
+	        })
+	        ->where('NumCgc', $RegFed)
+			->value('CodEmp');
 
-		foreach ($e070fils as $e070fil ) {
+			if($CodErp){
+				
+				$e070fils = e070emp::select('SigEmp','e070fil.CodEmp','SigFil','CodFil','NumCgc')
+				->join('e070fil', function ($join) {$join
+		        ->on('e070emp.CodEmp', '=', 'e070fil.CodEmp');
+		        })
+		        ->where('e070fil.CodEmp', $CodErp)
+				->get()->toArray();
 
-			$e070fil['NomSis']='Sapiens';
+				if($e070fils){
+					foreach ($e070fils as $e070fil ) {
+						
+						$e070fil['NumCgc']=str_pad($e070fil['NumCgc'], 14, '0', STR_PAD_LEFT);
+						$e070fil['NomSis']='Sapiens';
 
-			try {
-            
-            	$iderpemp000 = $erpemp000->new_erpemp000($e070fil);
-                                    
-        	} catch (\PDOException $e) {
+						try {
+			            
+			            	$iderpemp000 = $erpemp000->new_erpemp000($e070fil);
+			                                    
+			        	} catch (\PDOException $e) {
 
-        	}	
+			        	}	
+					}
+
+				}
+			}
 		}
 
+		if(DB::connection('vetorh')){
+
+			$CodHcm = r030emp::select('r030fil.NumEmp')
+			->join('r030fil', function ($join) {$join
+	        	->on('r030emp.NumEmp', '=', 'r030fil.NumEmp');
+	        })
+	        ->where('NumCgc', $RegFed)
+			->value('NumEmp');
+
+
+			if($CodHcm){
+
+				$r030fils = r030emp::select('ApeEmp','r030fil.NumEmp','NomFil','CodFil','NumCgc')
+				->join('r030fil', function ($join) {$join
+			        ->on('r030emp.NumEmp', '=', 'r030fil.NumEmp');
+			    })
+		        ->where('r030fil.NumEmp', $CodHcm)
+				->get()->toArray();
+				
+				if($r030fils){
+					foreach ($r030fils as $r030fil ) {
+
+						$r030fil['NumCgc']=str_pad($r030fil['NumCgc'], 14, '0', STR_PAD_LEFT);
+						$r030fil['NomSis']='Vetorh';
+						$r030fil['CodEmp']=$r030fil['NumEmp'];
+						$r030fil['SigEmp']=$r030fil['ApeEmp'];
+						$r030fil['SigFil']=$r030fil['NomFil'];
+
+						try {
+			            
+			            	$iderpemp000 = $erpemp000->new_erpemp000($r030fil);
+			                                    
+			        	} catch (\PDOException $e) {
+
+			        	}	
+					}
+				}
+			}
+		};
+
+
+
+
+	
+
+
 		$erpemp000 = erpemp000
-		::select('id','CodEmp','SigEmp','CodFil','SigFil','SitEmp')
+		::select('id','CodEmp','SigEmp','NomSis','RegFed','CodFil','SigFil','SitEmp')
 		->where('user_id', auth()->user()->id)
 		->get()
 		->toArray();
+
 		return datatables()->of($erpemp000)->toJson();
 	}
 

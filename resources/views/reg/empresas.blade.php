@@ -43,29 +43,7 @@
 <script src="{{ asset('assets/crm/js/dataTables.js') }}"></script>
 
 <script>
-  function ativar(id) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $.ajax({
-        url: "{{url('reg/atv_regemp000/')}}/"+id,
-        type: 'GET',
-        success: function(data) {
-
-            var table = $('#empresas').DataTable({
-              retrieve: true,
-            });
-            table.ajax.reload( null, false );
-            $('#UsuEmp').html(data);
-            showNotification( data+' ativa!', 'success');
-
-        }
-    });
-  }
-
+ 
   $(document).ready(function (){
 
     $('#empresas').DataTable({
@@ -85,15 +63,52 @@
           searchable: false,
           fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
             if (oData.SitEmp==1){
-              $(nTd).html('<div class="togglebutton"><label><input onclick="ativar('+oData.idRegEmp+')"type="checkbox" checked=""></label></div>');
+              $(nTd).html('<div class="togglebutton"><label><input onclick="ativarEmpresa('+oData.idRegEmp+')"type="checkbox" checked=""></label></div>');
             } else {
-              $(nTd).html('<div class="togglebutton"><label><input onclick="ativar('+oData.idRegEmp+')"type="checkbox"></label></div>');
+              $(nTd).html('<div class="togglebutton"><label><input onclick="ativarEmpresa('+oData.idRegEmp+')"type="checkbox"></label></div>');
             }
+          }
+        },
+        {data: null, title: 'Configurações',
+          className: "center",
+          orderable: false,
+          searchable: false,
+          fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+
+            $(nTd).html('<a href="{{url("reg/empresa-configuracoes")}}/'+oData.idRegEmp+'" class="badge badge-info">Configurações</a>');
           }
         }
       ],
     });
   });
+
+function ativarEmpresa(id) {
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
+  $.ajax({
+    url: "{{url('reg/atv_regemp000/')}}/"+id,
+    type: 'GET',
+    success: function(data) {
+        var table = $('#empresas').DataTable({
+          retrieve: true,
+        });
+        table.ajax.reload( null, false );
+      $('#UsuEmp').html(data);
+      console.log(data);
+      showNotification( data+' ativa!', 'success');
+    }
+  });
+}
+
+function configuracoesEmpresa(id){
+  alert(id);
+}
+
+
 
 </script>
 @endsection

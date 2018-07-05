@@ -83,14 +83,15 @@
                   <span class="sidebar-normal"> Folha </span>
                 </a>
             </li>
+       
         </ul>
     </div>
 </li>
 
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('bam.top5') }}">
-        <i class="material-icons">grade</i>
-        <p>Top 5</p>
+    <a class="nav-link" href="{{ route('hcm.rep') }}">
+        <i class="material-icons">watch_later</i>
+        <p>REP</p>
     </a>
 </li>
 

@@ -11,14 +11,13 @@ firebase.initializeApp(config);
 
 //firebase.auth().signOut();
 
-function access(email,pass){
-	firebase.auth().signInWithEmailAndPassword(email, pass);
-}
+
+firebase.auth().signInWithEmailAndPassword('marceloneris@hotmail.com','angra@@2');
 
 
 
-function DB(ref,child){
+var DB = function(ref,child){
 	var FB = firebase.database();
-	DB = FB.ref(ref).child(child);
+	var DB = FB.ref(ref).child(child);
 	return DB;
 }

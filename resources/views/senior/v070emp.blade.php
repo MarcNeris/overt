@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="row">
-    <div class="col-lg-6 col-md-6 col-sm-6">
+    <div class="col-lg-8 col-md-8 col-sm-6">
         <div class="card card-stats">
             <div class="card-header card-header-warning card-header-icon">
                 <div class="card-icon">
@@ -71,6 +71,8 @@
         {data: 'SigEmp', title: 'Empresa'},
         {data: 'CodFil', title: 'Código da Filial'},
         {data: 'SigFil', title: 'Filial'},
+        {data: 'RegFed', title: 'CNPJ'},
+        {data: 'NomSis', title: 'Sistema'},
         {data: null, title: 'Status',
           className: "center",
           orderable: false,

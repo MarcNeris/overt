@@ -170,7 +170,7 @@ class hcmController extends Controller
         	->on('r044cal.NumEmp', '=', 'r046ver.NumEmp')
         	->on('r044cal.CodCal', '=', 'r046ver.CodCal');
     	})
-    	->whereIn('r046ver.NumEmp', erp()->CodEmp)
+    	->whereIn('r046ver.NumEmp', hcm()->CodEmp)
 		->where('r044cal.TipCal', 11)
 		->where('r044cal.SitCal', 'T')
 		->orderBy('r044cal.CodCal','Desc')
@@ -188,7 +188,7 @@ class hcmController extends Controller
         	->on('r008evc.CodTab', '=', 'r046ver.TabEve')
         	->on('r008evc.CodEve', '=', 'r046ver.CodEve');
     	})
-    	->whereIn('r046ver.NumEmp', erp()->CodEmp)
+    	->whereIn('r046ver.NumEmp', hcm()->CodEmp)
     	->where('r046ver.CodCal', $CodCal->CodCal)
 		->where('r044cal.TipCal', 11)
 		->where('r044cal.SitCal', 'T')

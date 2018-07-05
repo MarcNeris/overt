@@ -11,6 +11,7 @@
                 <div class="title-area">
                     <p>tecnologia</p>
                     <h1 class="title-modern">software</h1>
+                    <h3>HCM</h3>
                     <h3>CRM</h3>
                     <h3>BAM</h3>
                     <div class="separator line-separator">♦</div>

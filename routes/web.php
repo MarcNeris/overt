@@ -134,6 +134,7 @@ $this->group(['middleware'=>['auth'],'namespace'=>'Reg', 'prefix' =>'reg'], func
 	//Rotas Administração de Empresas
 	//********************************************************************//
 	$this->get('empresas',	'regemp000Controller@empresas') 				->name('reg.empresas');
+	$this->get('empresa-configuracoes/{idRegEmp}',	'regemp000Controller@empresaConfiguracoes');
 	$this->get('empresa',	'regemp000Controller@empresa')					->name('reg.empresa');
 	$this->post('new_regemp000',	'regemp000Controller@new_regemp000')	->name('reg.new_regemp000');
 	$this->get('get_regemp000',	'regemp000Controller@get_regemp000')		->name('reg.get_regemp000');
@@ -281,8 +282,8 @@ $this->group(['middleware'=>['auth'],'namespace'=>'Hcm', 'prefix' =>'hcm'], func
 	$this->get('sync',					'syncController@sync')					->name('hcm.sync');
 	$this->get('rep',					'repController@rep')					->name('hcm.rep');
 	$this->get('get_hcmcol000',		'repController@get_hcmcol000')			->name('hcm.get_hcmcol000');
-	$this->get('monitoramento',			'repController@monitoramento')			->name('hcm.monitoramento');
-	$this->get('r034funUpload',			'uploadController@r034funUpload')		->name('hcm.r034funUpload');
+	$this->get('monitoramento/{UsuUid}/{CNPJ}',	'repController@monitoramento')			->name('hcm.monitoramento');
+	$this->get('employersUpload',	'uploadController@employersUpload')		->name('hcm.employersUpload');
 	$this->any('upd_repusers',			'repController@upd_repusers');
 
 });

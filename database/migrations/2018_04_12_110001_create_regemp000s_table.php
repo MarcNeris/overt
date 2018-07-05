@@ -21,6 +21,7 @@ class CreateRegemp000sTable extends Migration
             $table->integer     ('idUsuEdt')    ->comment('Editor do Registro');
             $table->integer     ('idRegEnt')    ->comment('Entidade Proprietária');
             $table->integer     ('idRegPsa')    ->comment('Pessoa');
+            $table->string      ('ChaCli',50)   ->comment('Chave Eletrônica do Cliente')->nullable();
             $table->char        ('SitReg', 1)   ->comment('Situação do Registro');
             $table->char        ('SitEmp', 1)   ->comment('Situação da Empresa');
             $table->float       ('CapEmp',15, 2)->comment('Capital Empresarial')->nullable();

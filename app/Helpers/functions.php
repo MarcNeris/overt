@@ -32,6 +32,37 @@ function erp(){
     $erpemp000s = erpemp000::select('id','CodEmp','SigEmp','CodFil','SigFil','SitEmp')
         ->where('user_id', auth()->user()->id)
         ->where('SitEmp', 1)
+        ->where('NomSis', 'Sapiens')
+        ->get()
+        ->toArray();
+
+        $CodEmp=[];
+        $CodFil=[];
+
+        foreach ($erpemp000s as $erpemp000) {
+            $CodEmp[] = $erpemp000['CodEmp'];
+            $CodFil[] = $erpemp000['CodFil'];
+        }
+
+    $erp = new \stdClass();
+
+    $erp->CodEmp = array_unique($CodEmp);
+    $erp->CodFil = array_unique($CodFil);
+
+    return $erp;
+}
+
+//********************************************************************//
+//
+//RETORNA OBJETO COM EMPRESAS E FILIAS DO SAPIENS
+//
+//********************************************************************//
+function hcm(){
+    
+    $erpemp000s = erpemp000::select('id','CodEmp','SigEmp','CodFil','SigFil','SitEmp')
+        ->where('user_id', auth()->user()->id)
+        ->where('SitEmp', 1)
+        ->where('NomSis', 'Vetorh')
         ->get()
         ->toArray();
 
@@ -128,7 +159,8 @@ function ativaEmpresa($idRegEmp=null)
     ,'regempusus.idRegEnt'
     ,'regempusus.idRegEmp'
     ,'regpsa000s.NomFta'
-    ,'regpsa000s.NomPsa')
+    ,'regpsa000s.NomPsa'
+    ,'regpsa000s.RegFed')
     ->join('regempusus', 'regempusus.idRegEmp', '=', 'regemp000s.id')
     ->join('users0001s', 'users0001s.idRegEmp', '=', 'regemp000s.id')
     ->join('regpsa000s', 'regemp000s.idRegPsa', '=', 'regpsa000s.id')
@@ -142,6 +174,7 @@ function ativaEmpresa($idRegEmp=null)
 
         Session::put(['NomEmp', $EmpUsu->NomPsa]);
         Session::put('NomFta',  str_limit($EmpUsu->NomFta, 21));
+        Session::put('RegFed',  $EmpUsu->RegFed);
         Session::put('idPrpEnt',$EmpUsu->idPrpEnt);
         Session::put('idRegEnt',$EmpUsu->idRegEnt);
         Session::put('idRegEmp',$EmpUsu->idRegEmp);
