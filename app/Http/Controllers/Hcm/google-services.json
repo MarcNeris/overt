@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "168435926428",
+    "firebase_url": "https://hcmrep-overt.firebaseio.com",
+    "project_id": "hcmrep-overt",
+    "storage_bucket": "hcmrep-overt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168435926428:android:50c336a458ced1af",
+        "android_client_info": {
+          "package_name": "com.overt.HCMREP"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168435926428-9c2nnl791tklveiu580cn2d6d8lkvpi9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIqKgT1dJ1gzLL0OFUf4dUEl4iCDBXlzk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

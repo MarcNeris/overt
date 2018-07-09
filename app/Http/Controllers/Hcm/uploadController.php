@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Hcm;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\regemp000;
-use App\Http\Controllers\FB;
+use App\Http\Controllers\FS;
 use DB;
 
 class uploadController extends Controller
@@ -112,11 +112,17 @@ class uploadController extends Controller
 
 
 		$employees =[];
+
+		$db = FS::FS();
+		
+
 		foreach ($uploadData as $key => $r034fun) {
 
 			$NumCgc = str_pad($r034fun->NUMCGC, 14, '0', STR_PAD_LEFT);
 
 			foreach ($regemp000s as $key => $regemp000) {
+
+				$employersRef = $db->collection('employers/contracts/'.$regemp000->RegFed);
 
 				if($regemp000->RegFed==$NumCgc){
 
@@ -126,23 +132,27 @@ class uploadController extends Controller
 					$DatNas = substr($r034fun->DATNAS,0,10);
 					$DatAdm = substr($r034fun->DATADM,0,10);
 
-					$employees[$NumCgc][$NumCpf]['NumEmp'] =  $r034fun->NUMEMP;
-					$employees[$NumCgc][$NumCpf]['NumCgc'] =  $NumCgc;
-					$employees[$NumCgc][$NumCpf]['NomEmp'] =  $r034fun->NOMFIL;
-					$employees[$NumCgc][$NumCpf]['NumCad'] =  $r034fun->NUMCAD;
-					$employees[$NumCgc][$NumCpf]['NumCra'] =  $r034fun->NUMCRA;
-					$employees[$NumCgc][$NumCpf]['NomFun'] =  $r034fun->NOMFUN;
-					$employees[$NumCgc][$NumCpf]['SitAfa'] =  $r034fun->SITAFA;
-					$employees[$NumCgc][$NumCpf]['NumCtp'] =  $r034fun->NUMCTP;
-					$employees[$NumCgc][$NumCpf]['NumCpf'] =  $NumCpf;
-					$employees[$NumCgc][$NumCpf]['NumPis'] =  $NumPis;
-					$employees[$NumCgc][$NumCpf]['DatNas'] =  $DatNas;
-					$employees[$NumCgc][$NumCpf]['DatAdm'] =  $DatAdm;
-					
+					$employees['NumEmp'] =  $r034fun->NUMEMP;
+					$employees['NumCgc'] =  $NumCgc;
+					$employees['NomEmp'] =  $r034fun->NOMFIL;
+					$employees['NumCad'] =  $r034fun->NUMCAD;
+					$employees['NumCra'] =  $r034fun->NUMCRA;
+					$employees['NomFun'] =  $r034fun->NOMFUN;
+					$employees['SitAfa'] =  $r034fun->SITAFA;
+					$employees['NumCtp'] =  $r034fun->NUMCTP;
+					$employees['NumCpf'] =  $NumCpf;
+					$employees['NumPis'] =  $NumPis;
+					$employees['DatNas'] =  $DatNas;
+					$employees['DatAdm'] =  $DatAdm;
+				
+					$employersRef->document($NumCpf)->set($employees);
 				}
 			}	
 		};
 
-		$FBWR=FB::WR('employers/', $employees);
+		
+		
+
+		//$FBWR=FB::WR('employers/', $employees);
 	}
 }

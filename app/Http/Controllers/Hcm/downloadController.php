@@ -10,9 +10,9 @@ use App\Models\hcmcol000;
 class downloadController extends Controller
 {
     
-    	public static function updEmployees(){
+    public static function updEmployees(){
 
-		$employees=FB::FB('employers/06004860000180/');
+	$employees=FB::FB('employers/06004860000180/');
 
 		if($employees){
 

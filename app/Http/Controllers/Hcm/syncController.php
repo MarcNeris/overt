@@ -6,27 +6,65 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\hcmcol000;
 use Session;
-
 use App\Jobs\Sync;
-
 use App\Jobs\employersJob;
 use App\Jobs\employeesJob;
-
 use App\Http\Controllers\FB;
+use App\Http\Controllers\FS;
 use App\Http\Controllers\Hcm\uploadController;
 use App\Http\Controllers\Hcm\downloadController;
 use App\Http\Controllers\Hcm\syncController;
+
 
 class syncController extends Controller
 {
 	
 	public static function sync(){
 
-
-		downloadController::updEmployees();
-
-		//employersJob::dispatch();
+		employersJob::dispatch();
 		//employeesJob::dispatch();
+
+		//uploadController::employersUpload();
+
+		$db = FS::FS();
+
+
+		$docRef = $db->collection('users/REP/AMoV2JPpihUIrfa8QN47ANN3krf1/06004860000180/2018-07-09')->document('09-22');
+		$snapshot = $docRef->snapshot();
+
+
+		$pontoRef = $db->collection('users/REP/AMoV2JPpihUIrfa8QN47ANN3krf1/06004860000180/2018-07-09');
+		$marcacoes = $pontoRef->documents();
+
+	//		dd($marcacoes);
+		foreach ($marcacoes as $marcacao) {
+		//	dd($marcacao->data());
+		}
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//echo "Hello " . $snapshot['firstName'];
+
+		//downloadController::updEmployees();
+
+		
 	
 	}
 
