@@ -282,7 +282,7 @@ $this->group(['middleware'=>['auth'],'namespace'=>'Hcm', 'prefix' =>'hcm'], func
 	$this->get('sync',					'syncController@sync')					->name('hcm.sync');
 	$this->get('rep',					'repController@rep')					->name('hcm.rep');
 	$this->get('get_hcmcol000',		'repController@get_hcmcol000')			->name('hcm.get_hcmcol000');
-	$this->get('monitoramento/{UsuUid}/{CNPJ}',	'repController@monitoramento')			->name('hcm.monitoramento');
+	$this->get('monitoramento/{UsuUid}',	'repController@monitoramento')			->name('hcm.monitoramento');
 	$this->get('employersUpload',	'uploadController@employersUpload')		->name('hcm.employersUpload');
 	$this->any('upd_repusers',			'repController@upd_repusers');
 

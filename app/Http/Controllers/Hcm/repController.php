@@ -12,10 +12,11 @@ use Session;
 class repController extends Controller
 {
     
-    public function monitoramento($UsuUid,$CNPJ){
+    public function monitoramento($UsuUid){
 
+         $RegFed = Session::get('RegFed');
 
-        return view('hcm.monitoramento', compact('UsuUid'));
+        return view('hcm.monitoramento', compact('UsuUid','RegFed'));
 
     }
 

@@ -9,7 +9,13 @@ var config = {
 
 firebase.initializeApp(config);
 
+const FS = firebase.firestore();
+
 //firebase.auth().signOut();
+
+
+const settings = {timestampsInSnapshots: true};
+FS.settings(settings);
 
 
 firebase.auth().signInWithEmailAndPassword('marceloneris@hotmail.com','angra@@2');

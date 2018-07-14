@@ -5,16 +5,18 @@ namespace App\Http\Controllers\Hcm;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\regemp000;
+use App\Models\Senior\r046ver;
 use App\Http\Controllers\FS;
+use App\Http\Controllers\FB;
 use DB;
 
 class uploadController extends Controller
 {
     public static function employersUpload(){
 
-    	$regemp000s = regemp000::join('regpsa000s','regpsa000s.id','regemp000s.idRegPsa')		
+    	$regemp000 = regemp000::join('regpsa000s','regpsa000s.id','regemp000s.idRegPsa')		
     	->select('ChaCli','RegFed')
-        ->get();
+        ->first();
 
 		$uploadData = DB::connection('vetorh')->select("
 
@@ -110,49 +112,57 @@ class uploadController extends Controller
 
 		");
 
-
-		$employees =[];
-
 		$db = FS::FS();
 		
 
+		$employees =[];
+		
 		foreach ($uploadData as $key => $r034fun) {
 
 			$NumCgc = str_pad($r034fun->NUMCGC, 14, '0', STR_PAD_LEFT);
+			
+			//foreach ($regemp000s as $key => $regemp000) {
 
-			foreach ($regemp000s as $key => $regemp000) {
+			if($regemp000->RegFed==$NumCgc){
 
-				$employersRef = $db->collection('employers/contracts/'.$regemp000->RegFed);
-
-				if($regemp000->RegFed==$NumCgc){
-
-					$NumCpf = str_pad($r034fun->NUMCPF, 11, '0', STR_PAD_LEFT);
-					$NumPis = str_pad($r034fun->NUMPIS, 11, '0', STR_PAD_LEFT);
-					
-					$DatNas = substr($r034fun->DATNAS,0,10);
-					$DatAdm = substr($r034fun->DATADM,0,10);
-
-					$employees['NumEmp'] =  $r034fun->NUMEMP;
-					$employees['NumCgc'] =  $NumCgc;
-					$employees['NomEmp'] =  $r034fun->NOMFIL;
-					$employees['NumCad'] =  $r034fun->NUMCAD;
-					$employees['NumCra'] =  $r034fun->NUMCRA;
-					$employees['NomFun'] =  $r034fun->NOMFUN;
-					$employees['SitAfa'] =  $r034fun->SITAFA;
-					$employees['NumCtp'] =  $r034fun->NUMCTP;
-					$employees['NumCpf'] =  $NumCpf;
-					$employees['NumPis'] =  $NumPis;
-					$employees['DatNas'] =  $DatNas;
-					$employees['DatAdm'] =  $DatAdm;
+				$NumCpf = str_pad($r034fun->NUMCPF, 11, '0', STR_PAD_LEFT);
+				$NumPis = str_pad($r034fun->NUMPIS, 11, '0', STR_PAD_LEFT);
 				
-					$employersRef->document($NumCpf)->set($employees);
-				}
-			}	
+				$DatNas = substr($r034fun->DATNAS,0,10);
+				$DatAdm = substr($r034fun->DATADM,0,10);
+
+				$employees[$NumCpf]['NumEmp'] =  $r034fun->NUMEMP;
+				$employees[$NumCpf]['NumCgc'] =  $NumCgc;
+				$employees[$NumCpf]['NomEmp'] =  $r034fun->NOMFIL;
+				$employees[$NumCpf]['NumCad'] =  $r034fun->NUMCAD;
+				$employees[$NumCpf]['NumCra'] =  $r034fun->NUMCRA;
+				$employees[$NumCpf]['NomFun'] =  $r034fun->NOMFUN;
+				$employees[$NumCpf]['SitAfa'] =  $r034fun->SITAFA;
+				$employees[$NumCpf]['NumCtp'] =  $r034fun->NUMCTP;
+				$employees[$NumCpf]['NumCpf'] =  $NumCpf;
+				$employees[$NumCpf]['NumPis'] =  $NumPis;
+				$employees[$NumCpf]['DatNas'] =  $DatNas;
+				$employees[$NumCpf]['DatAdm'] =  $DatAdm;
+
+				//$employersRef = $db->collection('employers/contracts/'.$NumCgc);
+				//$employersRef->document($NumCpf)->set($employees, ['merge' => true]);
+			}
+			//}		
 		};
 
-		
+		//$r046ver = r046ver::limit(1)->get()->toArray();
+
+		//$db->document('x/'.$regemp000->RegFed)->set($r046ver);
+		$FBWR = FB::WR('employers/'.$regemp000->RegFed, $employees);
+		dd($employees);
+
+
+		//$addedDocRef = $db->document('contracts/'.$regemp000->RegFed)->set($employees);//, ['merge' => true]);
+
+		//dd($employees);
+
 		
 
-		//$FBWR=FB::WR('employers/', $employees);
+
 	}
 }

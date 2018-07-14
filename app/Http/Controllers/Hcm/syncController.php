@@ -21,10 +21,10 @@ class syncController extends Controller
 	
 	public static function sync(){
 
-		employersJob::dispatch();
+		//employersJob::dispatch();
 		//employeesJob::dispatch();
 
-		//uploadController::employersUpload();
+		uploadController::employersUpload();
 
 		$db = FS::FS();
 
