@@ -8,6 +8,7 @@
 <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-storage.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-firestore.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBOM9nddVvB1lw17plPjToM4hLV8XdU0c"></script>
 <script src="{{asset('assets/hcm/js/firebase.js')}}"></script>
 <style type="text/css">
      #tablePonto{
@@ -19,37 +20,49 @@
 @section('content')
 <div class="row"> 
     <div class="col-md-12">
-        <div class="card card-nav-tabs">
-          <h4 class="card-header card-header-rose">Administração de Ponto
-          </h4>
-          <div class="card-body">
-            <div class="content table-responsive table-full-width">
-                <div class="content" id="tablePonto">
-                     <div class="col-md-2">
-                        <div class="form-group bmd-form-group is-filled">
-                        <label class="bmd-label-floating"></label>
-                        <input id="dataMarcacao" type="text" id="DatIni" name="dataMarcacao" class="form-control datepicker" placeholder="Data da Marcação">
-                      </div>
-                    </div>
-                    <table class="table table-striped table-hover">
-                        <thead class="text-primary">
-                            <th>Orientação</th>
-                            <th>Hora do Satélite</th>
-                            <th>Hora Marcação</th>
-                            <th>Matrícula</th>
-                            <th>Crachá</th>
-                            <th>CPF</th>
-                            <th>PIS</th>
-                        </thead>
-                        <tbody id="ponto">
-                        </tbody>
-                    </table>
+        <div class="card">
+            <div class="card-header card-header-text card-header-rose">
+                <div class="card-text">
+                    <h4 class="card-title">Monitoramento de Ponto</h4>
                 </div>
             </div>
-          </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">  
+                        <div class="content table-responsive table-full-width">
+                            <div class="content" id="tablePonto">
+                                <div class="col-md-3">
+                                    <div class="form-group bmd-form-group is-filled">
+                                    <label class="bmd-label-floating"></label>
+                                    <input id="dataMarcacao" type="text" id="DatIni" name="dataMarcacao" class="form-control datepicker" placeholder="Data da Marcação">
+                                  </div>
+                                </div>
+                                <table class="table table-striped table-hover">
+                                    <thead class="text-primary">
+                                        <th>Orientação</th>
+                                        <th>Hora do Satélite</th>
+                                        <th>Hora Marcação</th>
+                                        <th>CPF</th>
+                                        <th>PIS</th>
+                                    </thead>
+                                    <tbody id="ponto">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="map" class="map" style="position: relative; overflow: hidden;">
+                            <div style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; background-color: rgb(229, 227, 223);"> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="acertoPontoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -62,24 +75,30 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-danger">Reprovar</button>
-                        <span id="aprovaPonto"></span>
-                        <div class="col-md-12">
-                            <div class="card card-testimonial">
-                                <div class="icon">
-                                    <i class="material-icons">format_quote</i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 id="justificativaAcerto" class="card-description">
-                                    
-                                    </h5>
-                                </div>
-                                <div id="hasDoc" class="card-footer">
-                                    <h4 class="card-title">Documentação</h4>
-                                    <div class="card-avatar">
-                                      <img width="50px" height="50px" id="justificativaImagem" class="img" src="">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-testimonial">
+                                    <div class="icon">
+                                        <i class="material-icons">format_quote</i>
                                     </div>
+                                    <div class="card-body">
+                                        <h5 id="justificativaAcerto" class="card-description">
+                                        
+                                        </h5>
+                                    </div>
+                                    <div id="hasDoc" class="card-footer">
+                                        <h4 class="card-title">Documentação</h4>
+                                        <div class="card-avatar">
+                                          <img width="50px" height="50px" id="justificativaImagem" class="img" src="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row"> 
+                            <div class="col-md-12">
+                                <div id="mapMarcacao" class="card card-testimonial" style="background-color: rgb(229, 227, 223); height: 200px; width: 100%;">
+                                    
                                 </div>
                             </div>
                         </div>
@@ -114,10 +133,20 @@
                                     </div>
                                 </div>
                             </li>
+                            <div class="col-md-12">
+                                 <div class="row">
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-danger">Reprovar</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span id="aprovaPonto"></span>
+                                    </div>
+                                </div>
+                            </div>
                         </ul>
-                    </div>
-                    <div class="col-sm-6">
-                       
                     </div>
                 </div>
             </div>
@@ -129,7 +158,13 @@
 @section('js')
 <script type="text/javascript">
 
-acertoPonto = function(CNPJ, CPF, uid, dateTimeST){
+const mapOptions = {
+    zoom: 10,
+    scrollwheel: false,
+    styles: [{"featureType":"water","stylers":[{"saturation":50},{"lightness":-11},{"hue":"#0088ff"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#b3b3b3"}]}, {"featureType":"road","elementType":"geometry.stroke","stylers":[{"color":"#767676"},{"lightness":54}]},{"featureType":"landscape.man_made","elementType":"geometry.fill","stylers":[{"color":"#f6f2ee"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#9ab464"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#767676"}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","stylers":[{"visibility":"off"}]},{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#d2deba"}]},{"featureType":"poi.park","stylers":[{"visibility":"on"}]},{"featureType":"poi.sports_complex","stylers":[{"visibility":"on"}]},{"featureType":"poi.medical","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","stylers":[{"visibility":"simplified"}]}]
+}
+
+acertoPonto = function(CNPJ, CPF, uid, dateTimeST, mapOptions){
 
    
     const YYYYMMDD = moment(dateTimeST).format('YYYY-MM-DD');
@@ -154,7 +189,8 @@ acertoPonto = function(CNPJ, CPF, uid, dateTimeST){
 
         if(REP.justificativaImagem==1){
 
-            firebase.storage().ref('hcm/rep/'+uid+'/'+CNPJ+'/'+YYYYMMDD+'/'+HHmm+'.jpg').getDownloadURL().then(function(imageUrl){
+            //firebase.storage().ref('hcm/REP'+uid+'/'+CNPJ+'/'+YYYYMMDD+'/'+HHmm+'.jpg').getDownloadURL().then(function(imageUrl){
+            firebase.storage().ref('users/REP/'+uid+'/'+CNPJ+'/'+YYYYMMDD+'/'+HHmm+'.jpg').getDownloadURL().then(function(imageUrl){
 
                 $("#hasDoc").html('<h4 class="card-title">Documentação</h4><div class="card-avatar"><img width="50px" height="50px" id="justificativaImagem" class="img" src="'+imageUrl+'"></div>');
             });
@@ -184,15 +220,27 @@ acertoPonto = function(CNPJ, CPF, uid, dateTimeST){
             $('.X').addClass('badge-warning warning');
         }
 
-        
-
-        console.log(REP);
 
         $('#dataHoraAcerto').html(REP.dataHoraAcerto);
         $('#dataHoraST').html(REP.dataHoraST);
         $('#justificativaAcerto').html(REP.justificativaAcerto);
         $('#dataHoraSTAgo').html(moment(REP.dateTimeST).fromNow());
         $('#dataHoraAcertoAgo').html(moment(REP.dataHoraAcerto,'DD/MM/YYYY HH:mm:ss').fromNow());
+
+        mapOptions.zoom=17;
+
+        var mapMarcacao = new google.maps.Map(document.getElementById("mapMarcacao"), mapOptions);
+        
+        GOOGLE = {"lat": REP.latitude, "lng": REP.longitude};
+
+        mapMarcacao.setCenter(GOOGLE);  
+
+        var marker = new google.maps.Marker({
+            position: GOOGLE,
+            title: REP.dataHoraST
+        });
+
+        marker.setMap(mapMarcacao);
     })
 }
 
@@ -203,40 +251,69 @@ dataMarcacao.value = moment(new Date()).format('DD/MM/YYYY');
 
 dataMarcacao.addEventListener('blur', function(){
     
-    getMarcacao();
+    getMarcacao(mapOptions);
 });
 
-getMarcacao = function(){
+
+getMarcacao = function(mapOptions){
+
+
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    var bounds = new google.maps.LatLngBounds();
+    var infowindow = new google.maps.InfoWindow();
 
     var YYYYMMDD = moment($('#dataMarcacao').val(),'DD/MM/YYYY').format('YYYY-MM-DD');
 
     var uid = window.location.href.split("/")[window.location.href.split("/").length -1];
     
     var refEmployee = DB('rep','{{$RegFed}}'+'/'+YYYYMMDD+'/'+uid);
+
     refEmployee.on('value', function(REP){
+
 
         REP = REP.val();
 
+
         $("#ponto").empty();
 
-        var REPStatus = '<tr><td> <button class="btn btn-sm ${btnESclass}">${ES}</button></td> <td><h5>${dataHoraST}</h5></td> <td><button onclick="acertoPonto(\'${CNPJ}\',\'${CPF}\',\'${uid}\',\'${dateTimeST}\')" class="btn ${btnAcertoClass}" data-toggle="modal" data-target="#acertoPontoModal">${dataHoraAcerto}</button></td> <td>${NumCad}</td> <td>${NumCra}</td> <td>${CPF}</td> <td>${PIS}</td> </tr>';
+        var REPStatus = '<tr><td> <button class="btn btn-sm ${btnESclass}">${ES}</button></td> <td><h5>${horaST}</h5></td> <td><button onclick="acertoPonto(\'${CNPJ}\',\'${CPF}\',\'${uid}\',\'${dateTimeST}\', mapOptions)" class="btn ${btnAcertoClass}" data-toggle="modal" data-target="#acertoPontoModal">${horaAcerto}</button></td> <td>${CPF}</td> <td>${PIS}</td> </tr>';
 
         $.each( REP, function(dia, ponto){
 
-            if(ponto.justificativaAprovada==1){
-                ponto.btnAcertoClass = 'btn-success';
+            if(ponto.ES!='X'){
+                
+                GOOGLE = {"lat": ponto.latitude, "lng": ponto.longitude};
+
+                var marker = new google.maps.Marker({
+                    position: GOOGLE,
+                    title: ponto.dataHoraST,
+                    map:map
+                });
+
+                bounds.extend(marker.position);
+
+                map.fitBounds(bounds);
+
+                google.maps.event.addListener(marker, 'click', function() {
+      
+                    infowindow.setContent('Registro de Ponto\n'+ponto.horaST);
+                    infowindow.open(map, marker);
+                });
             }
 
-            ponto.dataHoraAcerto = moment(ponto.dataHoraAcerto,'DD/MM/YYYY HH:mm:ss').format('HH:mm');
+
+
+            if(ponto.justificativaAprovada==1){
+
+                ponto.btnAcertoClass = 'btn-success';
+            }
 
             $.tmpl( REPStatus, ponto ).appendTo( "#ponto" );
         })
     })
 }
 
-getMarcacao();
-
-
+getMarcacao(mapOptions);
 
 </script>
 @stop
