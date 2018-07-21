@@ -31,5 +31,8 @@ class HomeController extends Controller
         return view('overt');
     }
 
-
+    public function privacidade()
+    {
+        return view('privacidade');
+    }
 }

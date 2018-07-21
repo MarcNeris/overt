@@ -8,6 +8,7 @@
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/login', 'HomeController@index')->name('login');
 Route::get('/', 'HomeController@overt')->name('overt');
+Route::get('/privacidade', 'HomeController@privacidade')->name('privacidade');
 	//********************************************************************//
 	//
 	//ROTAS ADMINISTRACAO AUTH
@@ -281,9 +282,10 @@ $this->group(['middleware'=>['auth'],'namespace'=>'Hcm', 'prefix' =>'hcm'], func
 
 	$this->get('sync',					'syncController@sync')					->name('hcm.sync');
 	$this->get('rep',					'repController@rep')					->name('hcm.rep');
-	$this->get('get_hcmcol000',		'repController@get_hcmcol000')			->name('hcm.get_hcmcol000');
+	$this->get('get_hcmcol000',			'repController@get_hcmcol000')			->name('hcm.get_hcmcol000');
 	$this->get('monitoramento/{UsuUid}',	'repController@monitoramento')			->name('hcm.monitoramento');
-	$this->get('employersUpload',	'uploadController@employersUpload')		->name('hcm.employersUpload');
+	$this->get('employersUpload',		'uploadController@employersUpload')		->name('hcm.employersUpload');
 	$this->any('upd_repusers',			'repController@upd_repusers');
+
 
 });

@@ -14,7 +14,7 @@ class repController extends Controller
     
     public function monitoramento($UsuUid){
 
-         $RegFed = Session::get('RegFed');
+        $RegFed = Session::get('RegFed');
 
         return view('hcm.monitoramento', compact('UsuUid','RegFed'));
 
